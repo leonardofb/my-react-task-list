@@ -12,9 +12,13 @@ function TaskList() {
 
   return (
     <ol>
+     <div class="task-list">
+    <div class="task">
       {tasks.map(task => (
         <Task key={task.id} name={task.name} completed={task.completed} />
       ))}
+    </div>
+    </div>
     </ol>
   );
 }
