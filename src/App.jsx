@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 import TaskList from './components/TaskList';
+import './App.css'
 
 function App() {
   return (
@@ -10,5 +11,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

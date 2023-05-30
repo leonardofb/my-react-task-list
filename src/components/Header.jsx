@@ -1,13 +1,15 @@
 import React from 'react';
 function Header() {
     return (
+      <body>
       <nav>
-        <ul>
+        <ol>
           <li>
             <a> LISTA DE ACTIVIDADES</a>
           </li>
-        </ul>
+        </ol>
       </nav>
+      </body>
     );
   }
   
