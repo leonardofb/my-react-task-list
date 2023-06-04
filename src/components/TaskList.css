@@ -1,0 +1,16 @@
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task {
+  margin-bottom: 10px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.task.completed {
+  text-decoration: line-through;
+  color: gray;
+}
