@@ -119,7 +119,7 @@ useEffect(() => {
                   className="save-button"
                   type="button"
                   onClick={handleSaveButtonClick}
-                >
+                ><img src="/src/components/imagenes/guardar.gif" alt="save" className="icon" />
                   Save
                 </button>
                 <button
@@ -127,7 +127,7 @@ useEffect(() => {
                   className="cancel-button"
                   type="button"
                   onClick={handleCancelButtonClick}
-                >
+                ><img src="/src/components/imagenes/agregar2.png" alt="cancel" className="icon" />
                   Cancel
                 </button>
               </>
@@ -137,7 +137,7 @@ useEffect(() => {
                 className="edit-button"
                 type="button"
                 onClick={handleEditButtonClick}
-              >
+              ><img src="/src/components/imagenes/editar.gif" alt="edit" className="icon" />
                 Edit
               </button>
             )}
@@ -146,8 +146,8 @@ useEffect(() => {
               className="delete-button"
               type="button"
               onClick={handleDeleteButtonClick}
-            >
-              Delete
+            ><img src="/src/components/imagenes/eliminar2.gif" alt="Eliminar" className="icon" />
+            Delete
             </button>
           </div>
         </div>
