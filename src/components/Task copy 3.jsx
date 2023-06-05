@@ -6,48 +6,21 @@ function Task(props) {
   const [editing, setEditing] = useState(false);
   const [updatedName, setUpdatedName] = useState(props.name);
   const [editedName, setEditedName] = useState(props.name);
-/*
-  useEffect(() => {
-    setCompleted(getTaskState(props.id)?.completed || props.completed);
-  }, [props.completed]);
-*/
-useEffect(() => {
-  const taskState = getTaskState(props.id);
-  if (taskState) {
-    setCompleted(taskState.completed);
-    setEditedName(taskState.name);
-  } else {
-    setCompleted(props.completed);
-    setEditedName(props.name);
-  }
-}, [props.id, props.completed, props.name]);
 
-useEffect(() => {
-  const taskState = getTaskState(props.id);
-  if (taskState) {
-    setCompleted(taskState.completed);
-  } else {
+  useEffect(() => {
     setCompleted(props.completed);
-  }
-}, [props.id, props.completed]);
+  }, [props.completed]);
 
   const handleCheckboxChange = () => {
     const newCompleted = !completed;
     setCompleted(newCompleted);
     props.onUpdate(props.id, newCompleted);
-   // saveTaskState(props.id, newCompleted, editedName);
-    if (newCompleted) {
-      saveTaskState(props.id, newCompleted, editedName);
-    } else {
-      removeTaskState(props.id);
-    }
   };
 
   const handleDeleteButtonClick = () => {
     if (completed) {
       console.log('Eliminar tarea:', props.name);
       props.onDelete(props.id);
-      removeTaskState(props.id);
     }
   };
 
@@ -57,8 +30,8 @@ useEffect(() => {
 
   const handleSaveButtonClick = () => {
     setEditing(false);
+    //props.onUpdate(props.id, editedName);
     props.onUpdate(props.id, { completed, name: editedName });
-    saveTaskState(props.id, completed, editedName);
   };
 
   const handleCancelButtonClick = () => {
@@ -67,23 +40,6 @@ useEffect(() => {
 
   const handleNameChange = (e) => {
     setEditedName(e.target.value);
-  };
-
-  const saveTaskState = (taskId, completed, name) => {
-    const taskState = {
-      completed,
-      name,
-    };
-    localStorage.setItem(`task_${taskId}`, JSON.stringify(taskState));
-  };
-
-  const removeTaskState = (taskId) => {
-    localStorage.removeItem(`task_${taskId}`);
-  };
-
-  const getTaskState = (taskId) => {
-    const taskState = localStorage.getItem(`task_${taskId}`);
-    return taskState ? JSON.parse(taskState) : null;
   };
 
   return (
@@ -111,6 +67,7 @@ useEffect(() => {
             </span>
           )}
 
+          
           <div className="button-group">
             {editing ? (
               <>

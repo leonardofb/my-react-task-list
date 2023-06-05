@@ -46,8 +46,7 @@ button{
 }
 */
 
-.edit-button,
-.delete-button {
+.edit-button,.delete-button,.save-button {
   padding: 5px;
   background-color: #ccd2f8;
    color: #333;
@@ -58,7 +57,7 @@ button{
   margin-left: auto;
   transition: background-color 0.3s ease;
 }
-.edit-button img, .delete-button img {
+.edit-button img, .delete-button img, .save-button img  {
   margin-right: 5px;
   height: 20px;
   width: 20px;
@@ -69,4 +68,16 @@ button{
 }
 .delete-button:hover {
   background-color: #d84d4d;
+}
+.task-container {
+  display: flex;
+  align-items: center;
+}
+
+.button-group {
+  margin-left: auto;
+}
+
+.button-group button {
+  margin-left: 10px;
 }

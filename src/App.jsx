@@ -5,9 +5,9 @@ import './App.css'
 
 function App() {
   return (
-    <div>
-      <Header title="My React Task List" />
-      <TaskList/>
+     <div>
+      <Header title="My React Lista de tareas"/>
+        <TaskList/>
     </div>
   );
 }

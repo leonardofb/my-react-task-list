@@ -4,6 +4,7 @@ import './TaskList.css';
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
+  
 
   const generateId = () => {
     const timestamp = new Date().getTime();
@@ -24,43 +25,32 @@ function TaskList() {
         name: taskName,
         completed: false
       };
+      setTasks([...tasks, newTask]);
 
-      setTasks(prevTasks => {
-        const updatedTasks = [...prevTasks, newTask];
-
-        // Guardar las tareas actualizadas en localStorage
-        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-
-        return updatedTasks;
-      });
+      // Guardar las tareas actualizadas en localStorage
+      localStorage.setItem('tasks', JSON.stringify([...tasks, newTask]));
     }
   };
 
-  const handleUpdateTask = (taskId, updatedTask) => {
-    setTasks(prevTasks => {
-      const updatedTasks = prevTasks.map(task => {
-        if (task.id === taskId) {
-          return { ...task, ...updatedTask };
-        }
-        return task;
-      });
-
-      // Guardar las tareas actualizadas en localStorage
-      localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-
-      return updatedTasks;
+  const handleUpdateTask = (taskId, newCompleted) => {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === taskId) {
+        return { ...task, completed: newCompleted };
+      }
+      return task;
     });
+    setTasks(updatedTasks);
+
+    // Guardar las tareas actualizadas en localStorage
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   };
 
   const handleDeleteTask = taskId => {
-    setTasks(prevTasks => {
-      const updatedTasks = prevTasks.filter(task => task.id !== taskId);
+    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    setTasks(updatedTasks);
 
-      // Guardar las tareas actualizadas en localStorage
-      localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-
-      return updatedTasks;
-    });
+    // Guardar las tareas actualizadas en localStorage
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   };
 
   return (
@@ -85,4 +75,3 @@ function TaskList() {
 }
 
 export default TaskList;
-

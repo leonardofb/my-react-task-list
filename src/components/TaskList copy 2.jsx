@@ -36,21 +36,28 @@ function TaskList() {
     }
   };
 
-  const handleUpdateTask = (taskId, updatedTask) => {
+  const handleUpdateTask = (taskId, newCompleted) => {
     setTasks(prevTasks => {
+      // Utilizamos la función de actualización del estado para obtener el estado anterior de las tareas
+      // y devolver el nuevo estado actualizado
       const updatedTasks = prevTasks.map(task => {
+        // Comprobamos si el ID de la tarea coincide con el ID pasado como argumento
         if (task.id === taskId) {
-          return { ...task, ...updatedTask };
+          // Si es así, creamos un nuevo objeto de tarea con la propiedad "completed" actualizada
+          return { ...task, completed: newCompleted };
         }
+        // Si no coincide, simplemente devolvemos la tarea sin cambios
         return task;
       });
-
-      // Guardar las tareas actualizadas en localStorage
+  
+      // Guardamos las tareas actualizadas en el localStorage
       localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-
+  
+      // Devolvemos las tareas actualizadas para actualizar el estado en el componente TaskList
       return updatedTasks;
     });
   };
+  
 
   const handleDeleteTask = taskId => {
     setTasks(prevTasks => {
@@ -85,4 +92,3 @@ function TaskList() {
 }
 
 export default TaskList;
-
