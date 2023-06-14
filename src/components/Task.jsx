@@ -6,48 +6,22 @@ function Task(props) {
   const [editing, setEditing] = useState(false);
   const [updatedName, setUpdatedName] = useState(props.name);
   const [editedName, setEditedName] = useState(props.name);
-/*
+
   useEffect(() => {
-    setCompleted(getTaskState(props.id)?.completed || props.completed);
-  }, [props.completed]);
-*/
-useEffect(() => {
-  const taskState = getTaskState(props.id);
-  if (taskState) {
-    setCompleted(taskState.completed);
-    setEditedName(taskState.name);
-  } else {
     setCompleted(props.completed);
     setEditedName(props.name);
-  }
-}, [props.id, props.completed, props.name]);
-
-useEffect(() => {
-  const taskState = getTaskState(props.id);
-  if (taskState) {
-    setCompleted(taskState.completed);
-  } else {
-    setCompleted(props.completed);
-  }
-}, [props.id, props.completed]);
+  }, [props.completed, props.name]);
 
   const handleCheckboxChange = () => {
     const newCompleted = !completed;
     setCompleted(newCompleted);
-    props.onUpdate(props.id, newCompleted);
-   // saveTaskState(props.id, newCompleted, editedName);
-    if (newCompleted) {
-      saveTaskState(props.id, newCompleted, editedName);
-    } else {
-      removeTaskState(props.id);
-    }
+    props.onUpdate(props.id, { completed: newCompleted, name: editedName });
   };
 
   const handleDeleteButtonClick = () => {
     if (completed) {
       console.log('Eliminar tarea:', props.name);
       props.onDelete(props.id);
-      removeTaskState(props.id);
     }
   };
 
@@ -58,7 +32,6 @@ useEffect(() => {
   const handleSaveButtonClick = () => {
     setEditing(false);
     props.onUpdate(props.id, { completed, name: editedName });
-    saveTaskState(props.id, completed, editedName);
   };
 
   const handleCancelButtonClick = () => {
@@ -67,23 +40,6 @@ useEffect(() => {
 
   const handleNameChange = (e) => {
     setEditedName(e.target.value);
-  };
-
-  const saveTaskState = (taskId, completed, name) => {
-    const taskState = {
-      completed,
-      name,
-    };
-    localStorage.setItem(`task_${taskId}`, JSON.stringify(taskState));
-  };
-
-  const removeTaskState = (taskId) => {
-    localStorage.removeItem(`task_${taskId}`);
-  };
-
-  const getTaskState = (taskId) => {
-    const taskState = localStorage.getItem(`task_${taskId}`);
-    return taskState ? JSON.parse(taskState) : null;
   };
 
   return (
@@ -119,7 +75,7 @@ useEffect(() => {
                   className="save-button"
                   type="button"
                   onClick={handleSaveButtonClick}
-                ><img src="/src/components/imagenes/guardar.gif" alt="save" className="icon" />
+                >
                   Save
                 </button>
                 <button
@@ -127,7 +83,7 @@ useEffect(() => {
                   className="cancel-button"
                   type="button"
                   onClick={handleCancelButtonClick}
-                ><img src="/src/components/imagenes/agregar2.png" alt="cancel" className="icon" />
+                >
                   Cancel
                 </button>
               </>
@@ -137,7 +93,7 @@ useEffect(() => {
                 className="edit-button"
                 type="button"
                 onClick={handleEditButtonClick}
-              ><img src="/src/components/imagenes/editar.gif" alt="edit" className="icon" />
+              >
                 Edit
               </button>
             )}
@@ -146,8 +102,8 @@ useEffect(() => {
               className="delete-button"
               type="button"
               onClick={handleDeleteButtonClick}
-            ><img src="/src/components/imagenes/eliminar2.gif" alt="Eliminar" className="icon" />
-            Delete
+            >
+              Delete
             </button>
           </div>
         </div>
@@ -157,3 +113,4 @@ useEffect(() => {
 }
 
 export default Task;
+

@@ -12,7 +12,7 @@ Sus principales funcionalidades son
 1. Agregar una tarea.
 2. Eliminar una tarea en caso de ser seleccionada.
 3. Editar una tarea en y poder actualizarla.
-4. Dejar en la memoria totas las tareas.
+4. Dejar en la memoria todas las tareas.
 5. Que el usuario pueda dejar marcadas las tareas que ya se realizaron.
 6. Poder abrir la app en cualquier momento y encontrarla actualizada a como se dejo la ultima vez que se modifico.
 
