@@ -15,6 +15,11 @@ Sus principales funcionalidades son
 4. Dejar en la memoria todas las tareas.
 5. Que el usuario pueda dejar marcadas las tareas que ya se realizaron.
 6. Poder abrir la app en cualquier momento y encontrarla actualizada a como se dejo la ultima vez que se modifico.
+7. Que se pueda eliminar cualquier tarea completada solo si esta completada
+8. Que permita agregar una descripcion y es obcional.
+9. Que cuando se agregue una tarea permita agregarla solo si tiene mas de 3 letras.
+10. Que muestre los Error en pantalla de acuerdo a la validaciones ya mensionadas anto al agregar    como al editar.
+
 
 
 gracias.
