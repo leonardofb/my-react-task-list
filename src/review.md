@@ -21,5 +21,4 @@ Sus principales funcionalidades son
 10. Que muestre los Error en pantalla de acuerdo a la validaciones ya mensionadas anto al agregar    como al editar.
 
 
-
 gracias.

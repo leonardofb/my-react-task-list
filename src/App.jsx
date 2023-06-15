@@ -1,16 +1,18 @@
 // App.jsx
-import React from 'react';
-import Header from './components/Header';
-import TaskList from './components/TaskList';
-import './App.css';
+import { Menu } from "./components/Menu";
 
-function App() {
+export function AppRouter() {
   return (
-    <div>
-      <Header title="My React Lista de tareas" />
-      <TaskList />
-    </div>
+    <>
+      <Menu />
+    </>
   );
 }
 
-export default App;
+export function App() {
+  return (
+    <div>
+      <AppRouter />
+    </div>
+  );
+}
