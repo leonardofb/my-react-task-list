@@ -1,3 +1,4 @@
+// TaskList.jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useTaskState from './useTaskState';
@@ -6,11 +7,11 @@ import './TaskList.css';
 
 function TaskList() {
   const { tasks, addTask, updateTask, deleteTask } = useTaskState([]);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
     const { taskName, taskDescription } = data;
-    addTask(taskName, taskDescription || '');
+    addTask(taskName, taskDescription);
     reset();
   };
 
@@ -30,15 +31,14 @@ function TaskList() {
       <form onSubmit={handleSubmit(onSubmit)}>
           <div>
           <label htmlFor="taskName">Task Name:</label>
-          <input type="text" id="taskName" {...register('taskName', { required: true, minLength: 3 })} />
-          {errors.taskName && errors.taskName.type === 'minLength' && (
-            <p className="error-message">El nombre de la tarea debe tener al menos 3 letras.</p>
-          )}
+          <input type="text" id="taskName" {...register('taskName')} />
+        
         </div>
 
         <div>
           <label htmlFor="taskDescription">Task Description:</label>
-          <input type="text" id="taskDescription" {...register('taskDescription', { defaultValue: '' })} />
+          <input type="text" id="taskDescription" {...register('taskDescription')} />
+        
         </div>
 
         <button type="submit">Agregar Tarea</button>
@@ -62,5 +62,3 @@ function TaskList() {
 }
 
 export default TaskList;
-
-

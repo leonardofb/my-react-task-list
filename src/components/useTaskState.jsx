@@ -18,11 +18,12 @@ function useTaskState(initialTasks) {
     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   };
 
-  const addTask = (taskName) => {
+  const addTask = (taskName, taskDescription) => {
     if (taskName.trim() !== '') {
       const newTask = {
         id: generateId(),
         name: taskName,
+        description: taskDescription,
         completed: false
       };
 

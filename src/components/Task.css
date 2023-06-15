@@ -1,7 +1,19 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
-  font-size: 14px;
+  font-size: 12px;
+}
+.text-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
 }
 
 .task-item {
@@ -26,30 +38,29 @@ body {
 
 .task-name {
   text-decoration: none;
-  color: #333;
-  margin-left: 15px;
-  font-size: 12px;
+  color: #020202;
+  margin-left: 10px;
+  font-size: 16px;
   flex-grow: 1;
 }
-/*
-button{
-  padding: 8px 12px;
-  background-color: #377bd4;
-  color: #fff;
-  /*border: none;*/
- /* border-radius: 5px;
-  
-  cursor: pointer;
-  font-size: 14px;
-  margin-left: auto; /* Mueve los botones a la derecha */
-  /*transition: background-color 0.3s ease;
+.task-name-des {
+  text-decoration: none;
+  color: #020202;
+  margin-left: 20px;
+  font-size: 10px;
+  flex-grow: 1;
 }
-*/
+.completed {
+  text-decoration: line-through;
+  color: rgb(177, 17, 17);
 
-.edit-button,.delete-button,.save-button,.cancel-button, .save-button {
+}
+
+
+.edit-button,.delete-button,.cancel-button, .save-button {
   padding: 5px;
   background-color: #ccd2f8;
-   color: #333;
+  color: #070707;
   /*border: none;*/
   border-radius: 4px;
   font-size: 12px;
@@ -61,17 +72,22 @@ button{
   margin-right: 5px;
   height: 20px;
   width: 20px;
+  
 }
 
-.edit-button:hover {
+.edit-button:hover{
   background-color: #0efaab;
-}
+  }
+  .save-button:hover{
+    background-color: #0efaab;
+  }
 .delete-button:hover {
   background-color: #d84d4d;
 }
 .task-container {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .button-group {
@@ -80,4 +96,10 @@ button{
 
 .button-group button {
   margin-left: 10px;
+}
+.icon-button{
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
 }

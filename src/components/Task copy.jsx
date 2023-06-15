@@ -52,7 +52,7 @@ function Task({ task, updateTask, deleteTask }) {
     e.preventDefault();
 
     if (editedTask.name.length < 3) {
-      setError('La descripción debe tener al menos tres letras');
+      setError('La descripcion debe tener al menos tres letras');
       return;
     }
 
@@ -64,8 +64,8 @@ function Task({ task, updateTask, deleteTask }) {
       {isEditing ? (
         <div className="task-container">
           <form onSubmit={handleSubmit}>
-            <input 
-              type="text-input"
+            <input
+              type="text"
               name="name"
               value={editedTask.name}
               onChange={handleInputChange}
@@ -74,38 +74,37 @@ function Task({ task, updateTask, deleteTask }) {
               name="description"
               value={editedTask.description}
               onChange={handleInputChange}
+              
             />
             {error && <div className="error">{error}</div>}
-
+            
             <button className="save-button" type="submit">
               <img src="/src/components/imagenes/guardar.gif" alt="save" className="icon" />
               Save
             </button>
             <button className="cancel-button" onClick={handleCancel}>
-              <img src="/src/components/imagenes/undo.png" alt="cancelar" className="icon" />
+              <img src='/src/components/imagenes/undo.png' alt="cancelar" className="icon"/>
               Cancel
             </button>
           </form>
         </div>
       ) : (
         <div>
-          <span className={task.completed ? 'task-name completed' : 'task-name'}>
-            {task.name}
+          <span className={task.completed ? 'completed' : ''}>
+           {task.name}
           </span>
-          <p className="task-name-des">{task.description}</p>
-          
-          
+          <p>{task.description}</p>
           <button className="edit-button" onClick={handleEdit}>
-            <img src="/src/components/imagenes/editar.gif" alt="Editar" className="icon" />
+            <img src='/src/components/imagenes/editar.gif' alt="Editar" className="icon"/>         
             Edit
           </button>
           <button className="edit-button" onClick={handleComplete}>
-            <img src="/src/components/imagenes/completado.png" alt="completada" className="icon" />
-            {task.completed ? 'Undo' : 'Completada'}
+            <img src='/src/components/imagenes/completado.png' alt="comletada" className="icon"/>
+            {task.completed ? 'Undo' : 'Completado'}
           </button>
           {task.completed && (
             <button className="delete-button" onClick={handleDelete}>
-              <img src="/src/components/imagenes/eliminar.png" alt="eliminar" className="icon" />
+              <img src='/src/components/imagenes/eliminar.png' alt="eliminar" className="icon"/>
               Delete
             </button>
           )}
@@ -116,3 +115,4 @@ function Task({ task, updateTask, deleteTask }) {
 }
 
 export default Task;
+
