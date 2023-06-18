@@ -31,7 +31,7 @@
     transition: all 0.3s ease;
     
   }
-    
+  /*  
   li::before {
     content: "Para eliminar la tarea es necesario completarla";
     position: absolute;
@@ -45,7 +45,7 @@
     transition: all 0.3s ease;
     font-size: 50%;
   }
-  
+  */
   li:hover::before {
     transform: scale(2);
     content: "Recuerde Que para eliminar debe completar la tarea";
