@@ -56,7 +56,6 @@ body {
 
 }
 
-
 .edit-button,.delete-button,.cancel-button, .save-button {
   padding: 5px;
   background-color: #ccd2f8;
@@ -83,7 +82,20 @@ body {
   }
 .delete-button:hover {
   background-color: #d84d4d;
+  content: "Eliminar";
+  color: white;
+  font-size: 14px;
 }
+
+.delete-button:hover::before {
+  content: "Eliminar";
+  color: white;
+  font-size: 14px;
+}
+
+
+
+
 .task-container {
   display: flex;
   align-items: center;

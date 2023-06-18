@@ -106,8 +106,7 @@ function Task({ task, updateTask, deleteTask }) {
           {task.completed && (
             <button className="delete-button" onClick={handleDelete}>
               <img src="/src/components/imagenes/eliminar.png" alt="eliminar" className="icon" />
-              Delete
-            </button>
+              </button>
           )}
         </div>
       )}

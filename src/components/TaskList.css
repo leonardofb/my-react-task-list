@@ -36,10 +36,10 @@
     content: "Para eliminar la tarea es necesario completarla";
     position: absolute;
     top: 5px;
-    left: 700px;
+    left: 400px;
     width: 100px;
     height: 20px;
-    background-color: #e0b37f;
+    background-color: #eed3b4;
     border-radius: 10%;
     transform: scale(0);
     transition: all 0.3s ease;
@@ -48,6 +48,7 @@
   
   li:hover::before {
     transform: scale(2);
+    content: "Recuerde Que para eliminar debe completar la tarea";
   }
   
   li span {
