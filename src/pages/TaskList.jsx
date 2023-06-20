@@ -1,10 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import useTaskState from './useTaskState';
+import {useTaskState} from './useTaskState';
 import Task from './Task';
-import './TaskList.css';
+import styles from './styles/TaskList.module.css';
 
-function TaskList() {
+export function TaskList() {
   const { tasks, addTask, updateTask, deleteTask } = useTaskState([]);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
@@ -26,9 +26,10 @@ function TaskList() {
   };
 
   return (
-    <div>
+    
+    <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
+        <div className={styles.container}>
           <label htmlFor="taskName">Task Name:</label>
           <input type="text" id="taskName" {...register('taskName', { required: true, minLength: 3 })} />
           {errors.taskName && errors.taskName.type === 'minLength' && (
@@ -36,17 +37,18 @@ function TaskList() {
           )}
         </div>
 
-        <div>
+        <div className={styles.container}>
           <label htmlFor="taskDescription">Task Description:</label>
-          <input type="text" id="taskDescription" {...register('taskDescription', { defaultValue: '' })} />
+          <input type="text" className={styles.taskDescription} {...register('taskDescription', { defaultValue: '' })} />
+        <button type="submit">Agregar Tarea</button>
         </div>
 
-        <button type="submit">Agregar Tarea</button>
+        
       </form>
 
-      <ul className="task-print">
+      <ul className={styles.taskprint}>
         {tasks.map(task => (
-          <li className="task-list" key={task.id}>
+          <li className={styles.tasklist} id="task-list" key={task.id} >
             <Task
               task={task}
               updateTask={updateTask}
@@ -61,6 +63,6 @@ function TaskList() {
   );
 }
 
-export default TaskList;
+
 
 

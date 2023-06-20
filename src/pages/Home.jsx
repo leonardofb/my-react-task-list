@@ -1,4 +1,4 @@
 export const Home = () => {
-  return <h1>Bienvenido a la aplicación</h1>;
+  return <h1>Bienvenido a la aplicación Lista</h1>;
 };
 

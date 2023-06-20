@@ -3,20 +3,20 @@ body {
   background-color: #f4f4f4;
   font-size: 12px;
 }
-.text-input {
+.textinput {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 12px;
 }
 
-.text-input:focus {
+.textinput:focus {
   outline: none;
   border-color: #4caf50;
   box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
 }
 
-.task-item {
+.taskitem {
   background-color: #fff;
   padding: 5px;
   margin-bottom: 5px;
@@ -28,7 +28,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.task-item:hover {
+.taskitem:hover {
   background-color: #f9f9f9;
 }
 
@@ -36,14 +36,14 @@ body {
   margin-right: 10px;
 }
 
-.task-name {
+.taskname {
   text-decoration: none;
   color: #020202;
   margin-left: 10px;
   font-size: 16px;
   flex-grow: 1;
 }
-.task-name-des {
+.tasknamedes {
   text-decoration: none;
   color: #020202;
   margin-left: 20px;
@@ -56,7 +56,7 @@ body {
 
 }
 
-.edit-button,.delete-button,.cancel-button, .save-button {
+.editbutton,.deletebutton,.cancelbutton, .savebutton {
   padding: 5px;
   background-color: #ccd2f8;
   color: #070707;
@@ -67,49 +67,45 @@ body {
   margin-left: auto;
   transition: background-color 0.3s ease;
 }
-.edit-button img, .delete-button img, .save-button img, .cancel-button img, .save-button img  {
+.editbutton img, .deletebutton img, .savebutton img, .cancelbutton img, .savebutton img  {
   margin-right: 5px;
   height: 20px;
   width: 20px;
   
 }
 
-.edit-button:hover{
+.editbutton:hover{
   background-color: #0efaab;
   }
-  .save-button:hover{
+  .savebutton:hover{
     background-color: #0efaab;
   }
-.delete-button:hover {
+.deletebutton:hover {
   background-color: #d84d4d;
   content: "Eliminar";
   color: white;
   font-size: 14px;
 }
 
-.delete-button:hover::before {
+.deletebutton:hover::before {
   content: "Eliminar";
   color: white;
   font-size: 14px;
 }
-
-
-
-
-.task-container {
+.taskcontainer {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.button-group {
+.buttongroup {
   margin-left: auto;
 }
 
-.button-group button {
+.buttongroup button {
   margin-left: 10px;
 }
-.icon-button{
+.iconbutton{
   width: 30px;
   height: 30px;
   border: none;

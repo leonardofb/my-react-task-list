@@ -1,0 +1,78 @@
+.container {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tasklist {
+  list-style: none;
+  margin-bottom: 10px;
+  background-color: #a7ddee;
+  padding: 10px;
+  border-radius: 4px;
+  
+}
+
+.tasklist .ul {
+  all: unset;
+  padding: 0;
+  margin: 0;
+}
+.tasklist .task.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.tasklist .li:before {
+  color: #ff0000;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.tasklist .li {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tasklist .li::before {
+  content: "Para eliminar la tarea es necesario completarla";
+  position: absolute;
+  top: 5px;
+  left: 400px;
+  width: 100px;
+  height: 20px;
+  background-color: #eed3b4;
+  border-radius: 10%;
+  transform: scale(0);
+  transition: all 0.3s ease;
+  font-size: 50%;
+}
+
+.tasklist .li:hover::before {
+  transform: scale(2);
+  content: "Recuerde que para eliminar debe completar la tarea";
+}
+
+.li span {
+  font-size: 18px;
+}
+
+.taskprint {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.li span.task-name {
+  font-weight: bold;
+}
+
+.task-list .li .span.task-description {
+  font-weight: bold;
+}

@@ -1,0 +1,23 @@
+.container {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-list {
+  list-style: none;
+  margin-bottom: 10px;
+  background-color: #a7ddee;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.task-list ul {
+  all: unset;
+  padding: 0;
+  margin: 0;
+}
+  

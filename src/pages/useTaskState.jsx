@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-function useTaskState(initialTasks) {
+export function useTaskState(initialTasks) {
   const [tasks, setTasks] = useState(initialTasks);
 
   const generateId = () => {
@@ -54,5 +54,3 @@ function useTaskState(initialTasks) {
     deleteTask
   };
 }
-
-export default useTaskState;

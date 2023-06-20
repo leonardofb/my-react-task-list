@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Task.css';
+import styles from './styles/Task.module.css';
 
 function Task({ task, updateTask, deleteTask }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -60,12 +60,12 @@ function Task({ task, updateTask, deleteTask }) {
   };
 
   return (
-    <div className="button-group">
+    <div className={styles.buttongroup}>
       {isEditing ? (
-        <div className="task-container">
+        <div className={styles.taskcontainer}>
           <form onSubmit={handleSubmit}>
             <input 
-              type="text-input"
+              type="textinput"
               name="name"
               value={editedTask.name}
               onChange={handleInputChange}
@@ -77,11 +77,11 @@ function Task({ task, updateTask, deleteTask }) {
             />
             {error && <div className="error">{error}</div>}
 
-            <button className="save-button" type="submit">
+            <button className={styles.savebutton} type="submit">
               <img src="/src/components/imagenes/guardar.gif" alt="save" className="icon" />
               Save
             </button>
-            <button className="cancel-button" onClick={handleCancel}>
+            <button className={styles.cancelbutton} onClick={handleCancel}>
               <img src="/src/components/imagenes/undo.png" alt="cancelar" className="icon" />
               Cancel
             </button>
@@ -89,22 +89,22 @@ function Task({ task, updateTask, deleteTask }) {
         </div>
       ) : (
         <div>
-          <span className={task.completed ? 'task-name completed' : 'task-name'}>
-            {task.name}
+          
+          <span className={`${styles.taskname} ${task.completed ? styles.completed : ''}`}>
+          {task.name}
           </span>
-          <p className="task-name-des">{task.description}</p>
-          
-          
-          <button className="edit-button" onClick={handleEdit}>
+          <p className={styles.tasknamedes}>{task.description}</p>
+                        
+          <button className={styles.editbutton} onClick={handleEdit}>
             <img src="/src/components/imagenes/editar.gif" alt="Editar" className="icon" />
             Edit
           </button>
-          <button className="edit-button" onClick={handleComplete}>
+          <button className={styles.editbutton} onClick={handleComplete}>
             <img src="/src/components/imagenes/completado.png" alt="completada" className="icon" />
             {task.completed ? 'Undo' : 'Completada'}
           </button>
           {task.completed && (
-            <button className="delete-button" onClick={handleDelete}>
+            <button className={styles.deletebutton} onClick={handleDelete}>
               <img src="/src/components/imagenes/eliminar.png" alt="eliminar" className="icon" />
               </button>
           )}
@@ -113,5 +113,5 @@ function Task({ task, updateTask, deleteTask }) {
     </div>
   );
 }
-
 export default Task;
+
