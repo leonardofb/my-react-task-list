@@ -102,7 +102,7 @@ body {
   margin-left: auto;
 }
 
-.buttongroup button {
+.buttongroup .button {
   margin-left: 10px;
 }
 .iconbutton{

@@ -1,23 +1,22 @@
 .container {
-  width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.task-list {
+  display: flex;
+  justify-content: center;
   list-style: none;
-  margin-bottom: 10px;
-  background-color: #a7ddee;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 0;
 }
 
-.task-list ul {
-  all: unset;
-  padding: 0;
-  margin: 0;
+.container li {
+  margin: 0 10px;
 }
-  
+
+.container li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  font-size: 16px;
+}
+
+.container li a:hover {
+  color: #555;
+}

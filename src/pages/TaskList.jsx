@@ -30,15 +30,15 @@ export function TaskList() {
     <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.container}>
-          <label htmlFor="taskName">Task Name:</label>
-          <input type="text" id="taskName" {...register('taskName', { required: true, minLength: 3 })} />
+          <label htmlFor={styles.taskName}>   Task Name:</label>
+          <input type="text" className={styles.taskName} {...register('taskName', { required: true, minLength: 3 })} />
           {errors.taskName && errors.taskName.type === 'minLength' && (
             <p className="error-message">El nombre de la tarea debe tener al menos 3 letras.</p>
           )}
         </div>
 
         <div className={styles.container}>
-          <label htmlFor="taskDescription">Task Description:</label>
+          <label htmlFor={styles.taskName}>  Task Description: </label>
           <input type="text" className={styles.taskDescription} {...register('taskDescription', { defaultValue: '' })} />
         <button type="submit">Agregar Tarea</button>
         </div>
@@ -46,9 +46,9 @@ export function TaskList() {
         
       </form>
 
-      <ul className={styles.taskprint}>
+      <ul className={styles.tasklist}>
         {tasks.map(task => (
-          <li className={styles.tasklist} id="task-list" key={task.id} >
+          <li className={styles.li} key={task.id} >
             <Task
               task={task}
               updateTask={updateTask}

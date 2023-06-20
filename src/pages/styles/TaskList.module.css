@@ -26,12 +26,6 @@
   color: gray;
 }
 
-.tasklist .li:before {
-  color: #ff0000;
-  font-weight: bold;
-  margin-right: 5px;
-}
-
 .tasklist .li {
   position: relative;
   padding-left: 30px;
@@ -40,23 +34,17 @@
   transition: all 0.3s ease;
 }
 
-.tasklist .li::before {
-  content: "Para eliminar la tarea es necesario completarla";
-  position: absolute;
-  top: 5px;
-  left: 400px;
-  width: 100px;
-  height: 20px;
-  background-color: #eed3b4;
-  border-radius: 10%;
-  transform: scale(0);
-  transition: all 0.3s ease;
-  font-size: 50%;
-}
 
 .tasklist .li:hover::before {
   transform: scale(2);
+  color: #ff0000;
   content: "Recuerde que para eliminar debe completar la tarea";
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  border-radius: 10%;
+  font-weight: bold;
+  margin-right: 5px;
+  top: 5px;
 }
 
 .li span {
