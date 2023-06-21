@@ -1,9 +1,9 @@
-import styles from './styles/Home.module.css'
+import { Box,Text, Button, Input, Icon, Textarea, Flex, VStack, extendTheme, ChakraProvider } from '@chakra-ui/react';
 export const Home = () => {
   return (
-  <div className={styles.container}>
-  <h1>Bienvenido a la aplicación Lista</h1>;
-  </div>
+   <Box bg="gray.400">
+    <h1>Bienvenido a la aplicación Lista</h1>;
+    </Box>
   )
 };
 

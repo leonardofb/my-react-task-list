@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import styles from './styles/Task.module.css';
+import { Text, Button, Input, Icon, Textarea, Flex, VStack, extendTheme, ChakraProvider } from '@chakra-ui/react';
+import { CheckIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 function Task({ task, updateTask, deleteTask }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -42,7 +43,7 @@ function Task({ task, updateTask, deleteTask }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditedTask(prevState => ({
+    setEditedTask((prevState) => ({
       ...prevState,
       [name]: value
     }));
@@ -60,58 +61,76 @@ function Task({ task, updateTask, deleteTask }) {
   };
 
   return (
-    <div className={styles.buttongroup}>
+    <VStack spacing={4} align="left">
       {isEditing ? (
-        <div className={styles.taskcontainer}>
-          <form onSubmit={handleSubmit}>
-            <input 
-              type="textinput"
-              name="name"
-              value={editedTask.name}
-              onChange={handleInputChange}
-            />
-            <textarea
-              name="description"
-              value={editedTask.description}
-              onChange={handleInputChange}
-            />
-            {error && <div className="error">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            name="name"
+            value={editedTask.name}
+            onChange={handleInputChange}
+            mb={2}
+          />
+          <Textarea
+            placeholder="Escribe aquí"
+            name="description"
+            value={editedTask.description}
+            onChange={handleInputChange}
+            mb={2}
+          />
+          {error && <Text color="red.500">{error}</Text>}
 
-            <button className={styles.savebutton} type="submit">
-              <img src="/src/components/imagenes/guardar.gif" alt="save" className="icon" />
-              Save
-            </button>
-            <button className={styles.cancelbutton} onClick={handleCancel}>
-              <img src="/src/components/imagenes/undo.png" alt="cancelar" className="icon" />
-              Cancel
-            </button>
-          </form>
-        </div>
+          <Flex>
+            <Button type="submit" variant="solid" colorScheme="green" size="sm" mr={2}>
+              Guardar
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleCancel}>
+              Cancelar
+            </Button>
+          </Flex>
+        </form>
       ) : (
-        <div>
-          
-          <span className={`${styles.taskname} ${task.completed ? styles.completed : ''}`}>
-          {task.name}
-          </span>
-          <p className={styles.tasknamedes}>{task.description}</p>
-                        
-          <button className={styles.editbutton} onClick={handleEdit}>
-            <img src="/src/components/imagenes/editar.gif" alt="Editar" className="icon" />
-            Edit
-          </button>
-          <button className={styles.editbutton} onClick={handleComplete}>
-            <img src="/src/components/imagenes/completado.png" alt="completada" className="icon" />
-            {task.completed ? 'Undo' : 'Completada'}
-          </button>
-          {task.completed && (
-            <button className={styles.deletebutton} onClick={handleDelete}>
-              <img src="/src/components/imagenes/eliminar.png" alt="eliminar" className="icon" />
-              </button>
-          )}
-        </div>
+        <VStack align="left" spacing={2}>
+          <Text textDecoration={task.completed ? 'line-through' : 'none'} color={task.completed ? 'red.500' : 'inherit'}>
+            {task.name}
+          </Text>
+          <Text>{task.description}</Text>
+
+          <Flex>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleEdit}
+              colorScheme="teal"
+              leftIcon={<EditIcon boxSize={4} />}
+            >
+              Editar
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleComplete}
+              colorScheme="teal"
+              leftIcon={<CheckIcon boxSize={4} />}
+            >
+              {task.completed ? 'Desmarcar' : 'Completar'}
+            </Button>
+            {task.completed && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleDelete}
+                colorScheme="red"
+                leftIcon={<DeleteIcon boxSize={4} />}
+              >
+                Eliminar
+              </Button>
+            )}
+          </Flex>
+        </VStack>
       )}
-    </div>
+    </VStack>
   );
 }
-export default Task;
 
+export default Task;

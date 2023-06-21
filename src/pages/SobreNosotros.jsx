@@ -1,8 +1,6 @@
-import styles from './styles/Nosotros.module.css'
-
 export const SobreNosotros = () => {
   return (
-    <div className={styles.container}>
+    <div>
       <h1>Sobre Nosotros</h1>
       <p>Esta aplicación fue desarrollada utilizando React y react-router-dom. 
         ver los comentario en el codigo.

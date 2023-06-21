@@ -1,12 +1,29 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
-import {useTaskState} from './useTaskState';
+import { useTaskState } from './useTaskState';
+import { useState } from 'react';
 import Task from './Task';
-import styles from './styles/TaskList.module.css';
+import {
+  ChakraProvider,
+  Container,
+  Text,
+  VStack,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  FormHelperText,
+  FormErrorMessage,
+  Box,
+  Divider,
+} from '@chakra-ui/react';
+import { CheckIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 export function TaskList() {
   const { tasks, addTask, updateTask, deleteTask } = useTaskState([]);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const [input, setInput] = useState('');
+  const handleInputChange = (e) => setInput(e.target.value);
+  const isError = input === '';
 
   const onSubmit = (data) => {
     const { taskName, taskDescription } = data;
@@ -20,49 +37,53 @@ export function TaskList() {
       description: task.description
     }));
 
-    // Aquí puedes realizar la lógica para enviar los datos al servidor usando fetch u otras bibliotecas
+    // Aquí va la lógica para enviar los datos al servidor
 
     console.log('Tareas enviadas al servidor:', data);
   };
 
   return (
-    
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.container}>
-          <label htmlFor={styles.taskName}>   Task Name:</label>
-          <input type="text" className={styles.taskName} {...register('taskName', { required: true, minLength: 3 })} />
-          {errors.taskName && errors.taskName.type === 'minLength' && (
-            <p className="error-message">El nombre de la tarea debe tener al menos 3 letras.</p>
-          )}
-        </div>
+    <Box bg="gray.300">
+      <ChakraProvider>
+        <Container maxW="lg" py={8} bg="gray.800" color="white">
+          <Text fontSize="3xl" fontWeight="bold">Lista de Actividades</Text>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <VStack spacing={3} mt={5} align="start">
+              <FormControl isInvalid={isError}>
+                <FormLabel>Nombre de la tarea::</FormLabel>
+                <Input
+                  type='Task Name'
+                  {...register('taskName', { required: true, minLength: 3 })}
+                  onChange={handleInputChange}
+                />
+                {!isError && <FormHelperText color="gray.300">Ingrese una descripción de la tarea (opcional)</FormHelperText>}
+                {isError && <FormErrorMessage color="red.300">El nombre de la tarea es obligatorio.</FormErrorMessage>}
+              </FormControl>
+              <FormControl>
+                <FormLabel>Descripción de la tarea:</FormLabel>
+                <Input type="text" {...register('taskDescription', { defaultValue: '' })} />
+              </FormControl>
+              <Button type="submit" colorScheme="blue">Agregar Tarea</Button>
+            </VStack>
+          </form>
 
-        <div className={styles.container}>
-          <label htmlFor={styles.taskName}>  Task Description: </label>
-          <input type="text" className={styles.taskDescription} {...register('taskDescription', { defaultValue: '' })} />
-        <button type="submit">Agregar Tarea</button>
-        </div>
-
-        
-      </form>
-
-      <ul className={styles.tasklist}>
-        {tasks.map(task => (
-          <li className={styles.li} key={task.id} >
-            <Task
-              task={task}
-              updateTask={updateTask}
-              deleteTask={deleteTask}
-            />
-          </li>
-        ))}
-      </ul>
-
-      <button onClick={sendTasksToServer}>Enviar tareas al servidor</button>
-    </div>
+          <VStack spacing={3} mt={5} align="start">
+            {tasks.map((task, index) => (
+              <>
+                <Task
+                  task={task}
+                  updateTask={updateTask}
+                  deleteTask={deleteTask}
+                />
+                {index !== tasks.length - 1 && <Divider />}
+              </>
+            ))}
+          </VStack>
+        </Container>
+        <Container py={4}>
+          <Button onClick={sendTasksToServer} rightIcon={<CheckIcon />} colorScheme="green">Enviar</Button>
+        </Container>
+      </ChakraProvider>
+    </Box>
   );
 }
-
-
-
-
