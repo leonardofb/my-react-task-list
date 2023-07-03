@@ -15,6 +15,7 @@ import {
   FormErrorMessage,
   Box,
   Divider,
+  Flex,
 } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
@@ -24,6 +25,9 @@ export function TaskList() {
   const [input, setInput] = useState('');
   const handleInputChange = (e) => setInput(e.target.value);
   const isError = input === '';
+
+// Variable para contar tareas completadas
+const completedTasksCount = tasks.filter(task => task.completed).length;
 
   const onSubmit = (data) => {
     const { taskName, taskDescription } = data;
@@ -36,42 +40,65 @@ export function TaskList() {
       name: task.name,
       description: task.description
     }));
-
     // Aquí va la lógica para enviar los datos al servidor
 
     console.log('Tareas enviadas al servidor:', data);
   };
 
   return (
-    <Box bg="gray.300">
+    <Flex
+      direction="column"
+      justify="space-evenly"
+      align="center"
+      w="90%"
+      margin="auto"
+      border="1px solid red"
+      height="100vh"
+      >
+      
       <ChakraProvider>
         <Container maxW="lg" py={8} bg="gray.800" color="white">
-          <Text fontSize="3xl" fontWeight="bold">Lista de Actividades</Text>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <VStack spacing={3} mt={5} align="start">
+        <Flex justifyContent="space-between" alignItems="center">
+            <Text fontSize="3xl" fontWeight="bold">Lista de Actividades</Text>
+            
+        </Flex>
+               
+          <form onSubmit={handleSubmit(onSubmit) }>
+            <VStack spacing={3} mt={5} align="start">  {/* Se usa para apolar verticalmen los BOx */}
               <FormControl isInvalid={isError}>
-                <FormLabel>Nombre de la tarea::</FormLabel>
-                <Input
+                <FormLabel>Nombre de la tarea:</FormLabel> 
+                 <Input
                   type='Task Name'
                   {...register('taskName', { required: true, minLength: 3 })}
                   onChange={handleInputChange}
                 />
-                {!isError && <FormHelperText color="gray.300">Ingrese una descripción de la tarea (opcional)</FormHelperText>}
+                {!isError && <FormHelperText color="gray.300">Debe ingresar la tarea como minimo 3 letras</FormHelperText>}
                 {isError && <FormErrorMessage color="red.300">El nombre de la tarea es obligatorio.</FormErrorMessage>}
               </FormControl>
               <FormControl>
                 <FormLabel>Descripción de la tarea:</FormLabel>
                 <Input type="text" {...register('taskDescription', { defaultValue: '' })} />
-              </FormControl>
-              <Button type="submit" colorScheme="blue">Agregar Tarea</Button>
+                {!isError && <FormHelperText color="gray.300">Ingrese la descripción de la tarea. (opcional)</FormHelperText>}
+               </FormControl>
+               
             </VStack>
+
+               <Flex alignItems="center" mt={3}>
+                   <Button type="submit" variant="solid" colorScheme="telegram">Agregar Tarea</Button>
+                    <Box ml="auto">
+                      <Text>Tareas completadas: {completedTasksCount}/{tasks.length}</Text>
+                  </Box>
+                </Flex>
+            
           </form>
 
           <VStack spacing={3} mt={5} align="start">
             {tasks.map((task, index) => (
               <>
+              
                 <Task
-                  task={task}
+                  key={index}     //Me corrigio el error cada tara tiene un llave unica
+                  task={task}                  
                   updateTask={updateTask}
                   deleteTask={deleteTask}
                 />
@@ -84,6 +111,6 @@ export function TaskList() {
           <Button onClick={sendTasksToServer} rightIcon={<CheckIcon />} colorScheme="green">Enviar</Button>
         </Container>
       </ChakraProvider>
-    </Box>
+    </Flex>
   );
 }

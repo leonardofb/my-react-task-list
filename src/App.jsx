@@ -3,26 +3,46 @@ import React from "react";
 import { Home } from './pages/Home';
 import { TaskList } from './pages/TaskList';
 import { SobreNosotros } from './pages/SobreNosotros';
-import { ChakraProvider, Box, VStack, Text, Button } from '@chakra-ui/react';
+import { ChakraProvider, Box, VStack, Text, Button, Flex, ColorModeScript, useColorModeValue } from '@chakra-ui/react';
+import { useColorMode } from "@chakra-ui/react";
+import MyTheme from "./theme";
 
 export const App = () => {
+  const { colorMode, toggleColorMode } = useColorMode("dark");
+  console.log(colorMode, toggleColorMode);
+
+  const buttonBg = useColorModeValue("teal.500", "teal.200");
+
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={MyTheme}>
+      <ColorModeScript initialColorMode={MyTheme.config.initialColorMode} />
       <Router>
-        <Box display="flex">
-          <Box w="250px" bg="gray.200" p={4}>
+        <Flex
+          direction="center"
+          justify="space-evenly"
+          align="center"
+          w="90%"
+          margin="auto"
+          border="1px solid red"
+          height="100vh"
+        >
+          <Flex w="250px" p={4}>
             <VStack spacing={4} align="start">
               <Link to="/">
-                <Button variant="ghost">Home</Button>
+                <Button colorScheme="teal" bg={buttonBg}>Home</Button>
               </Link>
               <Link to="/TaskList">
-                <Button variant="ghost">Task List</Button>
+                <Button colorScheme="teal" bg={buttonBg}>Task List</Button>
               </Link>
               <Link to="/SobreNosotros">
-                <Button variant="ghost">Sobre Nosotros</Button>
+                <Button colorScheme="teal" bg={buttonBg}>Sobre Nosotros</Button>
               </Link>
+              <Button colorScheme="whatsapp" onClick={toggleColorMode}>
+                Toggle to {colorMode === "dark" ? "light" : "dark"} mode
+              </Button>
             </VStack>
-          </Box>
+          </Flex>
+
           <Box flex="1" p={4}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -30,11 +50,10 @@ export const App = () => {
               <Route path="/SobreNosotros" element={<SobreNosotros />} />
             </Routes>
           </Box>
-        </Box>
+        </Flex>
       </Router>
     </ChakraProvider>
   );
 };
-
 
 export default App;
