@@ -1,5 +1,6 @@
+//TaskList.jsx
 import Task from './Task';
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTaskState } from './useTaskState';
 import {
@@ -20,31 +21,20 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, RepeatIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import MyTheme from '../theme';
 import { useColorMode, useBoolean } from '@chakra-ui/react';
-import React, { useRef } from 'react';
 import Alert from './Alert';
 
 export function TaskList() {
   const { tasks, addTask, updateTask, deleteTask, deleteAllTasks, deleteCompletedTasks } = useTaskState([]);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [input, setInput] = useState('');
-  const isError = input === '';
-  const [flag, setFlag] = useBoolean();
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showDeleteAllAlert, setShowDeleteAllAlert] = useState(false);
+  const { colorMode, toggleColorMode } = useColorMode();
   const labelColor = useColorModeValue('gray.600', 'gray.400');
   const buttonBg = useColorModeValue('teal.500', 'teal.200');
   const buttonColor = useColorModeValue('white', 'gray.800');
-  const textColor = useColorModeValue('gray.800', 'whith');
-  const { colorMode, toggleColorMode } = useColorMode('dark');
-  const leftIcon = colorMode === 'dark' ? <MoonIcon /> : <SunIcon />;
-
-  ///alertas
-  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-  const [showDeleteAllAlert, setShowDeleteAllAlert] = useState(false);
-  const cancelRef = useRef();
-
-  // Variable para contar tareas completadas
+  const textColor = useColorModeValue('gray.800', 'black');
   const completedTasksCount = tasks.filter(task => task.completed).length;
 
   const createTask = (taskName, taskDescription) => {
@@ -52,7 +42,7 @@ export function TaskList() {
       setTimeout(() => {
         const newTask = addTask(taskName, taskDescription || '');
         resolve(newTask);
-      }, 0); // Simular un retraso de 3 segundos antes de resolver la promesa
+      }, 0);
     });
   };
 
@@ -85,15 +75,6 @@ export function TaskList() {
       });
   };
 
-  const [task, setTask] = useState('');
-  const [showError, setShowError] = useState(false);
-
-  const handleInputChange = (e) => {
-    const inputValue = e.target.value;
-    setTask(inputValue);
-    setShowError(inputValue.length < 3);
-  };
-
   const handleOpenDeleteCompletedAlert = () => {
     setShowDeleteAlert(true);
   };
@@ -119,144 +100,146 @@ export function TaskList() {
     deleteAllTasks();
     setShowDeleteAllAlert(false);
   };
-
   return (
-    <ChakraProvider>
-      <Flex
-        direction="column"
-        justify="space-evenly"
-        align="center"
-        w="90%"
-        margin="auto"
-        border="1px solid red"
-        height="100vh"
-        className="task-list-container"
-      >
-        <Container maxW="lg" py={8} color="white">
-          <Flex justifyContent="space-between" alignItems="center">
-            <Text fontSize="3xl" color={textColor} fontWeight="bold">
-              Activities list
-            </Text>
-          </Flex>
-
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl isInvalid={isError}>
-              <FormLabel color={labelColor}>Name of the homework:</FormLabel>
-              <Input
-                type="Task Name"
-                placeholder="Enter your Task"
-                _placeholder={{
-                  color: useColorModeValue('gray.500', 'gray.600'),
-                }}
-                _focus={{
-                  boxShadow: useColorModeValue('outline', 'outlineDark'),
-                }}
-                {...register('taskName', { required: true, minLength: 3 })}
-                onChange={handleInputChange}
-              />
-              {showError && (
-                <FormHelperText color="red.500">
-                  You must enter the task with at least 3 letters.
-                </FormHelperText>
-              )}
-              {isError && (
-                <FormErrorMessage color="red.300">
-                  The task name is required.
-                </FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl>
-              <FormLabel color={labelColor}>Task Description:</FormLabel>
-              <Input
-                type="text"
-                placeholder="Enter the description"
-                _placeholder={{
-                  color: useColorModeValue('gray.400', 'gray.600'),
-                }}
-                _focus={{
-                  boxShadow: useColorModeValue('outline', 'outlineDark'),
-                }}
-                {...register('taskDescription', { defaultValue: '' })}
-              />
-              {isError && (
-                <FormHelperText color={labelColor}>
-                  Enter the task description. (optional)
-                </FormHelperText>
-              )}
-            </FormControl>
-            <Flex alignItems="center" mt={3}>
-              <ButtonGroup size='sm' isAttached variant='outline'>
-                <Button bg={buttonBg} color={buttonColor} mt={4} type="submit" variant="solid" colorScheme="telegram">
-                  {<AddIcon />} {/*agregar Tareas */}
-                </Button>
-              </ButtonGroup>
-              <Box ml="auto">
-                {/*BORRADO DE TODAS LAS TAREAS COMPLETADAS */}
-                <Text>Completed tasks: {completedTasksCount}/{tasks.length}</Text>
-
-                <Button onClick={handleOpenDeleteCompletedAlert} leftIcon={<CheckIcon />} colorScheme="teal" bg={buttonBg} color={buttonColor} mt={4} py={4} size="sm">
-                  {<DeleteIcon />} all
-                </Button>
-                
-                <Alert
-                  isOpen={showDeleteAlert}
-                  onClose={handleCloseDeleteCompletedAlert}
-                  onConfirm={confirmDeleteCompleted}
-                  cancelText="Cancelar"
-                  confirmText="Eliminar"
-                  title="Confirmar Eliminación"
-                  message="¿Estás seguro de que quieres eliminar todas las tareas completadas? Esta acción no se puede deshacer."
-                />                
-              </Box>
-            </Flex>
-          </form>
-
-          <Box maxH="200px" overflowY="scroll" className="task-list-container" >
-
-            <VStack spacing={2} mt={3} align="start">
-              {tasks.map((task, index) => [
-                <label>Tarea: {index + 1}</label>,
-                <Task
-                  key={index}
-                  task={task}
-                  updateTask={updateTask}
-                  deleteTask={deleteTask}
-                />,
-                index !== tasks.length - 1 && <Divider key={`divider-${index}`} />,
-              ])}
-            </VStack>
-
+    <VStack spacing={4} align="stretch">
+      <Box maxW="lg" py={8}>
+        <Flex justifyContent="space-between" alignItems="center">
+        <Box bg={colorMode === 'dark' ? "gray.700" : "gray.200"} color={colorMode === 'dark' ? "white" : "gray.800"}>
+          <Text fontSize="3xl" fontWeight="bold">
+           Task List
+          </Text>
           </Box>
-        </Container>
+          <Button
+            colorScheme="teal"
+            bg={buttonBg}
+            color={buttonColor}
+            size="sm"
+            onClick={toggleColorMode}
+          >
+            Toggle to {colorMode === 'dark' ? 'light' : 'dark'} mode
+          </Button>
+        </Flex>
 
-        <Container py={4}>
-          <Button onClick={sendTasksToServer} rightIcon={<CheckIcon />} colorScheme="green">Enviar</Button>
-        </Container>
-        <Button onClick={handleOpenDeleteAllAlert} colorScheme="teal" bg={buttonBg} color={buttonColor} mt={4} py={4} size="sm">
-          {<DeleteIcon />}{<RepeatIcon />}Borrar
-        </Button>
-        <Alert
-          isOpen={showDeleteAllAlert}
-          onClose={handleCloseDeleteAllAlert}
-          onConfirm={confirmDeleteAll}
-          cancelText="Cancelar"
-          confirmText="Eliminar"
-          title="Confirmar Eliminación"
-          message="¿Estás seguro de que quieres eliminar todas las tareas? Esta acción no se puede deshacer."
-        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box>
+            <Text color={labelColor}>Name of the homework:</Text>
+            <Input
+              type="text"
+              placeholder="Enter your Task"
+              {...register('taskName', { required: true, minLength: 3 })}
+              mt={2}
+            />
+            {errors.taskName && (
+              <Text color="red.300" mt={1}>
+                Description must have at least three letters.
+              </Text>
+            )}
+          </Box>
 
-        <Button
-          colorScheme="teal"
-          bg={buttonBg}
-          color={buttonColor}
-          mt={4}
-          size="sm"
-          onClick={toggleColorMode}
-        >
-          Toggle to {colorMode === "dark" ? "light" : "dark"} mode
-        </Button>
+          <Box>
+            <Text color={labelColor}>Task Description:</Text>
+            <Input
+              type="text"
+              placeholder="Enter the description"
+              {...register('taskDescription', { defaultValue: '' })}
+              mt={2}
+            />
+            <Text color={labelColor} mt={1}>
+              Enter the task description. (optional)
+            </Text>
+          </Box>
 
-      </Flex>
-    </ChakraProvider>
+          <Flex alignItems="center" mt={3}>
+            <Button
+              bg={buttonBg}
+              color={buttonColor}
+              mt={4}
+              type="submit"
+              variant="solid"
+              colorScheme="telegram"
+              leftIcon={<AddIcon />}
+              size="sm"
+            >
+              Add Task
+            </Button>
+
+            <Box ml="auto">
+              <Text>
+                Completed tasks: {completedTasksCount}/{tasks.length}
+              </Text>
+
+              <Button
+                onClick={handleOpenDeleteCompletedAlert}
+                leftIcon={<DeleteIcon />}
+                colorScheme="teal"
+                bg={buttonBg}
+                color={buttonColor}
+                mt={4}
+                py={4}
+                size="sm"
+              >
+                All Comple
+              </Button>
+
+              <Alert
+                isOpen={showDeleteAlert}
+                onClose={handleCloseDeleteCompletedAlert}
+                onConfirm={confirmDeleteCompleted}
+                cancelText="Cancel"
+                confirmText="Delete"
+                title="Confirm Deletion"
+                message="Are you sure you want to delete all completed tasks? This action cannot be undone."
+              />
+            </Box>
+          </Flex>
+        </form>
+
+        <Box maxH="200px" overflowY="scroll">
+          <VStack spacing={2} mt={3} align="start">
+            {tasks.map((task, index) => (
+              <React.Fragment key={index}>
+                <Text>Tarea: {index + 1}</Text>
+                <Task task={task} updateTask={updateTask} deleteTask={deleteTask} />
+                {index !== tasks.length - 1 && <Divider />}
+              </React.Fragment>
+            ))}
+          </VStack>
+        </Box>
+      </Box>
+
+      <Button
+        onClick={handleOpenDeleteAllAlert}
+        colorScheme="teal"
+        bg={buttonBg}
+        color={buttonColor}
+        mt={4}
+        py={4}
+        size="sm"
+        leftIcon={<DeleteIcon />}
+        rightIcon={<RepeatIcon />}
+      >
+        Delete All
+      </Button>
+
+      <Alert
+        isOpen={showDeleteAllAlert}
+        onClose={handleCloseDeleteAllAlert}
+        onConfirm={confirmDeleteAll}
+        cancelText="Cancel"
+        confirmText="Delete"
+        title="Confirm Deletion"
+        message="Are you sure you want to delete all tasks? This action cannot be undone."
+      />
+
+      <Button
+        onClick={sendTasksToServer}
+        rightIcon={<CheckIcon />}
+        colorScheme="green"
+        mt={4}
+        size="sm"
+      >
+        Send Tasks to Server
+      </Button>
+    </VStack>
   );
 }

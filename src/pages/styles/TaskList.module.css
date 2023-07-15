@@ -1,7 +1,7 @@
 .tasklist .li:hover::before {
   transform: scale(2);
   color: #ff0000;
-  content: "Recuerde que para eliminar debe completar la tarea";
+  content: "Recuerde que para Delete debe completar la tarea";
   background-color: #ffffff;
   transition: all 0.3s ease;
   border-radius: 10%;

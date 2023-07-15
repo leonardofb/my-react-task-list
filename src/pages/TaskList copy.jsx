@@ -1,3 +1,4 @@
+//TaskList.jsx
 import Task from './Task';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -18,22 +19,16 @@ import {
   Divider,
   Flex,
   useColorModeValue,
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogBody,
-  AlertDialogFooter,
 } from '@chakra-ui/react';
-import { CheckIcon, DeleteIcon,RepeatIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
+import { CheckIcon, DeleteIcon, RepeatIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import MyTheme from '../theme';
 import { useColorMode, useBoolean } from '@chakra-ui/react';
 import React, { useRef } from 'react';
-
+import Alert from './Alert';
 
 export function TaskList() {
-  const { tasks, addTask, updateTask, deleteTask,deleteAllTasks,deleteCompletedTasks} = useTaskState([]);
+  const { tasks, addTask, updateTask, deleteTask, deleteAllTasks, deleteCompletedTasks } = useTaskState([]);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [input, setInput] = useState('');
   const isError = input === '';
@@ -44,10 +39,12 @@ export function TaskList() {
   const textColor = useColorModeValue('gray.800', 'whith');
   const { colorMode, toggleColorMode } = useColorMode('dark');
   const leftIcon = colorMode === 'dark' ? <MoonIcon /> : <SunIcon />;
- 
+
   ///alertas
-    const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-    const cancelRef = useRef(); 
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showDeleteAllAlert, setShowDeleteAllAlert] = useState(false);
+  const cancelRef = useRef();
+
   // Variable para contar tareas completadas
   const completedTasksCount = tasks.filter(task => task.completed).length;
 
@@ -56,24 +53,6 @@ export function TaskList() {
       setTimeout(() => {
         const newTask = addTask(taskName, taskDescription || '');
         resolve(newTask);
-      }, 0); // Simular un retraso de 3 segundos antes de resolver la promesa
-    });
-  };
-
-  const deleteTaskAsync = (taskId) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        deleteTask(taskId);
-        resolve();
-      }, 0); // Simular un retraso de 3 segundos antes de resolver la promesa
-    });
-  };
-
-  const completeTaskAsync = (taskId) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        updateTask(taskId, { completed: true });
-        resolve();
       }, 0); // Simular un retraso de 3 segundos antes de resolver la promesa
     });
   };
@@ -116,17 +95,30 @@ export function TaskList() {
     setShowError(inputValue.length < 3);
   };
 
-  const handleDeleteAll = () => {
+  const handleOpenDeleteCompletedAlert = () => {
     setShowDeleteAlert(true);
   };
 
-  const confirmDeleteAll = () => {
+  const handleCloseDeleteCompletedAlert = () => {
+    setShowDeleteAlert(false);
+  };
+
+  const handleOpenDeleteAllAlert = () => {
+    setShowDeleteAllAlert(true);
+  };
+
+  const handleCloseDeleteAllAlert = () => {
+    setShowDeleteAllAlert(false);
+  };
+
+  const confirmDeleteCompleted = () => {
     deleteCompletedTasks();
     setShowDeleteAlert(false);
   };
 
-  const cancelDeleteAll = () => {
-    setShowDeleteAlert(false);
+  const confirmDeleteAll = () => {
+    deleteAllTasks();
+    setShowDeleteAllAlert(false);
   };
 
   return (
@@ -202,31 +194,20 @@ export function TaskList() {
               <Box ml="auto">
                 {/*BORRADO DE TODAS LAS TAREAS COMPLETADAS */}
                 <Text>Completed tasks: {completedTasksCount}/{tasks.length}</Text>
-                <Button onClick={handleDeleteAll} leftIcon={<DeleteIcon />} colorScheme="red">
-                  Eliminar Completadas
+
+                <Button onClick={handleOpenDeleteCompletedAlert} leftIcon={<CheckIcon />} colorScheme="teal" bg={buttonBg} color={buttonColor} mt={4} py={4} size="sm">
+                  {<DeleteIcon />} all
                 </Button>
-                <AlertDialog isOpen={showDeleteAlert} leastDestructiveRef={cancelRef}>
-                  <AlertDialogOverlay>
-                    <AlertDialogContent>
-                      <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                        Confirmar Eliminación
-                      </AlertDialogHeader>
-
-                      <AlertDialogBody>
-                        ¿Estás seguro de que quieres eliminar todas las tareas completadas? Esta acción no se puede deshacer.
-                      </AlertDialogBody>
-
-                      <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={cancelDeleteAll}>
-                          Cancelar
-                        </Button>
-                        <Button colorScheme="red" onClick={confirmDeleteAll} ml={3}>
-                          Eliminar
-                        </Button>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialogOverlay>
-                </AlertDialog>
+                
+                <Alert
+                  isOpen={showDeleteAlert}
+                  onClose={handleCloseDeleteCompletedAlert}
+                  onConfirm={confirmDeleteCompleted}
+                  cancelText="Cancel"
+                  confirmText="Delete"
+                  title="Confirmar Eliminación"
+                  message="¿Estás seguro de que quieres Delete todas las tareas completadas? Esta acción no se puede deshacer."
+                />                
               </Box>
             </Flex>
           </form>
@@ -252,9 +233,19 @@ export function TaskList() {
         <Container py={4}>
           <Button onClick={sendTasksToServer} rightIcon={<CheckIcon />} colorScheme="green">Enviar</Button>
         </Container>
-        <Button onClick={deleteAllTasks} colorScheme="teal" bg={buttonBg} color={buttonColor} mt={4} py={4} size="sm">
+        <Button onClick={handleOpenDeleteAllAlert} colorScheme="teal" bg={buttonBg} color={buttonColor} mt={4} py={4} size="sm">
           {<DeleteIcon />}{<RepeatIcon />}Borrar
         </Button>
+        <Alert
+          isOpen={showDeleteAllAlert}
+          onClose={handleCloseDeleteAllAlert}
+          onConfirm={confirmDeleteAll}
+          cancelText="Cancel"
+          confirmText="Delete"
+          title="Confirmar Eliminación"
+          message="¿Estás seguro de que quieres Delete todas las tareas? Esta acción no se puede deshacer."
+        />
+
         <Button
           colorScheme="teal"
           bg={buttonBg}

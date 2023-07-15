@@ -10,15 +10,15 @@ de manera que cada vez que se cargue la aplicación o página, se listen las tod
 #¿Cuáles son las funcionalidades más importantes y porque los usuarios las usarían?
 Sus principales funcionalidades son 
 1. Agregar una tarea.
-2. Eliminar una tarea en caso de ser seleccionada.
-3. Editar una tarea en y poder actualizarla.
+2. Delete una tarea en caso de ser seleccionada.
+3. Edit una tarea en y poder actualizarla.
 4. Dejar en la memoria todas las tareas.
 5. Que el usuario pueda dejar marcadas las tareas que ya se realizaron.
 6. Poder abrir la app en cualquier momento y encontrarla actualizada a como se dejo la ultima vez que se modifico.
-7. Que se pueda eliminar cualquier tarea completada solo si esta completada
+7. Que se pueda Delete cualquier tarea completada solo si esta completada
 8. Que permita agregar una descripcion y es obcional.
 9. Que cuando se agregue una tarea permita agregarla solo si tiene mas de 3 letras.
-10. Que muestre los Error en pantalla de acuerdo a la validaciones ya mensionadas anto al agregar    como al editar.
+10. Que muestre los Error en pantalla de acuerdo a la validaciones ya mensionadas anto al agregar    como al Edit.
 
 
 gracias.

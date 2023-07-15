@@ -1,3 +1,4 @@
+//Task.jsx
 import React, { useState } from 'react';
 import {
   Text,
@@ -7,8 +8,6 @@ import {
   Textarea,
   Flex,
   VStack,
-  extendTheme,
-  ChakraProvider,
   useTheme,
   Box,
   useColorModeValue,
@@ -79,7 +78,7 @@ function Task({ task, updateTask, deleteTask }) {
     e.preventDefault();
 
     if (editedTask.name.length < 3) {
-      setError('Description must have at least three letters');
+      setError('Description must have at least three (3) letters');
       return;
     }
 
@@ -87,92 +86,87 @@ function Task({ task, updateTask, deleteTask }) {
   };
 
   return (
-    <ChakraProvider>
-      <VStack spacing={4} align="left">
-        {isEditing ? (
-          <form onSubmit={handleSubmit}>
-            <Box bg={theme.colors.gray[200]} color={theme.colors.gray[500]}>
-              <Input
-                colorScheme={colorMode === 'dark' ? 'teal' : 'blue'}
-                type="text"
-                placeholder="Escribe la tarea"
-                name="name"
-                value={editedTask.name}
-                onChange={handleInputChange}
-                size="mb"
-                mb={2}
-                color={inputColor}
-                bg={inputBgColor}
-                w="500"
-              />
-            </Box>
-            <Textarea
-              colorScheme={colorMode === 'dark' ? 'teal' : 'blue'}
-              placeholder="Write the description"
-              name="description"
-              value={editedTask.description}
-              onChange={handleInputChange}
-              mb={1}
-              color={inputColor}
-              bg={inputBgColor}
-              w="500"
-            />
-            {error && <Text color="red.500">{error}</Text>}
+    <VStack spacing={2} align="left">
+    {isEditing ? (
+      <form onSubmit={handleSubmit}>
+        <Box bg={colorMode === 'dark' ? "gray.700" : "gray.200"} color={colorMode === 'dark' ? "white" : "gray.800"}>
+          <Input
+            colorScheme={colorMode === 'dark' ? 'teal' : 'blue'}
+            type="text"
+            placeholder="Enter Your Task"
+            name="name"
+            value={editedTask.name}
+            onChange={handleInputChange}
+       
+            color={inputColor}
+            bg={inputBgColor}
+            w="400px"
+          />
+        </Box>
+        <Input
+          colorScheme={colorMode === 'dark' ? 'teal' : 'blue'}
+          placeholder="Write the description"
+          name="description"
+          value={editedTask.description}
+          onChange={handleInputChange}
+          mb={1}
+          color={inputColor}
+          bg={inputBgColor}
+          w="400px"
+        />
+        {error && <Text color="red.500">{error}</Text>}
 
-            <Flex>
-              <Button type="submit" variant="solid" colorScheme="teal" size="sm" mr={2}>
-                Guardar
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleCancel}>
-                Cancelar
-              </Button>
-            </Flex>
-          </form>
-        ) : (
-          <VStack align="left" spacing={2}>
-            <Text
-              textDecoration={task.completed ? 'line-through' : 'none'}
-              color={task.completed ? 'red.500' : 'inherit'}
+        <Flex>
+          <Button type="submit" variant="solid" colorScheme="teal" size="sm" mr={2}>
+            Save
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleCancel}>
+            Cancel
+          </Button>
+        </Flex>
+      </form>
+    ) : (
+      <VStack align="left" spacing={1}>
+        <Text
+          textDecoration={task.completed ? 'line-through' : 'none'}
+          color={task.completed ? 'red.500' : 'inherit'}
+        >
+          {task.name}
+        </Text>
+        <Text>{task.description}</Text>
+        <Flex>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleEdit}
+            colorScheme="teal"
+            leftIcon={<EditIcon boxSize={4} />}
+          >
+            Edit
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleComplete}
+            colorScheme="teal"
+            leftIcon={<CheckIcon boxSize={4} />}
+          >
+            {task.completed ? 'uncheck' : ''}
+          </Button>
+          {task.completed && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleDelete}
+              colorScheme="red"
+              leftIcon={<DeleteIcon boxSize={4} />}
             >
-              {task.name}
-            </Text>
-            <Text>{task.description}</Text>
-
-            <Flex>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleEdit}
-                colorScheme="teal"
-                leftIcon={<EditIcon boxSize={4} />}
-              >
-                {/*Editar*/}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleComplete}
-                colorScheme="teal"
-                leftIcon={<CheckIcon boxSize={4} />}
-              >
-                {task.completed ? 'uncheck' : ''}
-              </Button>
-              {task.completed && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDelete}
-                  colorScheme="red"
-                  leftIcon={<DeleteIcon boxSize={4} />}
-                >
-                  {/*Eliminar*/}
-                </Button>
-              )}
-            </Flex>
-          </VStack>
-        )}
+               </Button>
+          )}
+        </Flex>
       </VStack>
-    </ChakraProvider>
+    )}
+  </VStack>
   );
 }
 

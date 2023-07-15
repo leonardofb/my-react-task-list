@@ -2,7 +2,7 @@ import { Box,Text, Button, Input, Icon, Textarea, Flex, VStack, extendTheme, Cha
 export const Home = () => {
   return (
    <Box>
-    <h1>Welcome to the To Do List app</h1>
+    <Text fontSize="48px">Welcome to the To-Do List app</Text>
     </Box>
   )
 };
