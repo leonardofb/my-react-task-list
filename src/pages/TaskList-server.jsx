@@ -19,17 +19,18 @@ import {
   Flex,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { CheckIcon, DeleteIcon,RepeatIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
+import { CheckIcon, DeleteIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import MyTheme from '../theme';
 import { useColorMode, useBoolean } from '@chakra-ui/react';
 
 export function TaskList() {
-  const { tasks, addTask, updateTask, deleteTask,deleteAllTasks,deleteCompletedTasks} = useTaskState([]);
+  const { tasks, addTask, updateTask, deleteTask } = useTaskState([]);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [input, setInput] = useState('');
   const isError = input === '';
   const [flag, setFlag] = useBoolean();
+
   const labelColor = useColorModeValue('gray.600', 'gray.400');
   const buttonBg = useColorModeValue('teal.500', 'teal.200');
   const buttonColor = useColorModeValue('white', 'gray.800');
@@ -40,41 +41,10 @@ export function TaskList() {
   // Variable para contar tareas completadas
   const completedTasksCount = tasks.filter(task => task.completed).length;
 
-  const createTask = (taskName, taskDescription) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const newTask = addTask(taskName, taskDescription || '');
-        resolve(newTask);
-      }, 0); // Simular un retraso de 3 segundos antes de resolver la promesa
-    });
-  };
-
-  const deleteTaskAsync = (taskId) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        deleteTask(taskId);
-        resolve();
-      }, 0); // Simular un retraso de 3 segundos antes de resolver la promesa
-    });
-  };
-
-  const completeTaskAsync = (taskId) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        updateTask(taskId, { completed: true });
-        resolve();
-      }, 0); // Simular un retraso de 3 segundos antes de resolver la promesa
-    });
-  };
-
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     const { taskName, taskDescription } = data;
-    try {
-      await createTask(taskName, taskDescription || '');
-      reset();
-    } catch (error) {
-      console.error('Error al crear la tarea:', error);
-    }
+    addTask(taskName, taskDescription || '');
+    reset();
   };
 
   const sendTasksToServer = () => {
@@ -83,7 +53,7 @@ export function TaskList() {
         // Aquí va la lógica para enviar los datos al servidor
         setTimeout(() => {
           resolve(task);
-        }, 0); // Simular un retraso de 3 segundos antes de resolver la promesa
+        }, 3000); // Simular un retraso de 3 segundos antes de resolver la promesa
       });
     });
 
@@ -127,8 +97,6 @@ export function TaskList() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl isInvalid={isError}>
               <FormLabel color={labelColor}>Name of the homework:</FormLabel>
-              
-
               <Input
                 type="Task Name"
                 placeholder="Enter your Task"
@@ -171,76 +139,69 @@ export function TaskList() {
                 </FormHelperText>
               )}
             </FormControl>
-            <Flex alignItems="center" mt={3}>
-               <ButtonGroup size='sm' isAttached variant='outline'>
-                   <Button bg={buttonBg} color={buttonColor} mt={4} 
-                    type="submit" variant="solid" colorScheme="telegram">
-                     {<AddIcon/>} {/*agregar Tareas */}
-                   </Button>
-               
-                  </ButtonGroup>  
 
-                    <Box ml="auto">
-                        {/*BORRADO DE TODAS LAS TAREAS COMPLETADAS */}
-                       <Text>Completed tasks: {completedTasksCount}/{tasks.length}</Text>
-                       <Button onClick={deleteCompletedTasks} leftIcon={<CheckIcon />}colorScheme="teal"
-                            bg={buttonBg}
-                            color={buttonColor}
-                            mt={4}
-                            py={4}
-                            size="sm">
-                           {<DeleteIcon/>} all </Button>  
-                      
-                      
-                   </Box>
-                </Flex>
-            
+            <Flex alignItems="center" mt={3}>
+              <ButtonGroup size="sm" isAttached variant="outline">
+                <Button
+                  bg={buttonBg}
+                  color={buttonColor}
+                  mt={4}
+                  type="submit"
+                  variant="solid"
+                  colorScheme="telegram"
+                >
+                  {<AddIcon />} {/*agregar Tareas */}
+                </Button>
+              </ButtonGroup>
+
+              <Box ml="auto">
+                <Text>
+                  Completed tasks: {completedTasksCount}/{tasks.length}
+                </Text>
+              </Box>
+            </Flex>
           </form>
-    
-               <Box maxH="200px" overflowY="scroll" className="task-list-container" >
-        
-                 <VStack spacing={2} mt={3} align="start">
-                 color={textColor}
-                        {tasks.map((task, index) => [                           
-                        <label>Tarea: {index+1}</label>,
-                    
-                        <Task                         
-                          key={index}
-                          task={task}
-                          updateTask={updateTask}
-                          deleteTask={deleteTask} 
-                        />,
-                        index !== tasks.length - 1 && <Divider key={`divider-${index}`} />,
-                      
-            ])}  
-          </VStack>
-       
+
+          <Box maxH="200px" overflowY="scroll" className="task-list-container">
+            <VStack spacing={2} mt={3} align="start">
+              color={textColor}
+              {tasks.map((task, index) => [
+                <label>Tarea: {index + 1}</label>,
+
+                <Task
+                  key={index}
+                  task={task}
+                  updateTask={updateTask}
+                  deleteTask={deleteTask}
+                />,
+                index !== tasks.length - 1 && (
+                  <Divider key={`divider-${index}`} />
+                ),
+              ])}
+            </VStack>
           </Box>
-       </Container>
+        </Container>
 
         <Container py={4}>
-          <Button onClick={sendTasksToServer} rightIcon={<CheckIcon />} colorScheme="green">Enviar</Button>
-        </Container>
-        <Button onClick={deleteAllTasks}colorScheme="teal"
-                            bg={buttonBg}
-                            color={buttonColor}
-                            mt={4}
-                            py={4}
-                            size="sm">
-        {<DeleteIcon/>}{<RepeatIcon/>}Borrar</Button>
-        <Button
-            colorScheme="teal"
-            bg={buttonBg}
-            color={buttonColor}
-            mt={4}
-            size="sm"
-            onClick={toggleColorMode}
+          <Button
+            onClick={sendTasksToServer}
+            rightIcon={<CheckIcon />}
+            colorScheme="green"
           >
-            Toggle to {colorMode === "dark" ? "light" : "dark"} mode
+            Enviar
           </Button>
-
-    </Flex>
-    
-      </ChakraProvider>
+        </Container>
+        <Button
+          colorScheme="teal"
+          bg={buttonBg}
+          color={buttonColor}
+          mt={4}
+          size="sm"
+          onClick={toggleColorMode}
+        >
+          Toggle to {colorMode === 'dark' ? 'light' : 'dark'} mode
+        </Button>
+      </Flex>
+    </ChakraProvider>
   );
 }

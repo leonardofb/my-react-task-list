@@ -3,7 +3,7 @@ import React from "react";
 import { Home } from './pages/Home';
 import { TaskList } from './pages/TaskList';
 import { SobreNosotros } from './pages/SobreNosotros';
-import { ChakraProvider, Box, VStack, Text, Button, Flex, ColorModeScript, useColorModeValue } from '@chakra-ui/react';
+import { ChakraProvider, Box, VStack, Text, Button, Flex, ColorModeScript, useColorModeValue} from '@chakra-ui/react';
 import { useColorMode } from "@chakra-ui/react";
 import MyTheme from "./theme";
 
@@ -12,7 +12,10 @@ export const App = () => {
   console.log(colorMode, toggleColorMode);
 
   const buttonBg = useColorModeValue("teal.500", "teal.200");
-
+  const labelColor = useColorModeValue("gray.600", "gray.400");
+  const inputBg = useColorModeValue("white", "gray.700");
+  const inputColor = useColorModeValue("gray.800", "gray.200");
+  const buttonColor = useColorModeValue("white", "gray.800");
   return (
     <ChakraProvider theme={MyTheme}>
       <ColorModeScript initialColorMode={MyTheme.config.initialColorMode} />
@@ -35,9 +38,10 @@ export const App = () => {
                 <Button colorScheme="teal" bg={buttonBg}>Task List</Button>
               </Link>
               <Link to="/SobreNosotros">
-                <Button colorScheme="teal" bg={buttonBg}>Sobre Nosotros</Button>
+                <Button colorScheme="teal" bg={buttonBg}>About us</Button>
               </Link>
-              <Button colorScheme="whatsapp" onClick={toggleColorMode}>
+              <Button colorScheme="whatsapp" onClick={toggleColorMode} mt={4}
+              size="xs">
                 Toggle to {colorMode === "dark" ? "light" : "dark"} mode
               </Button>
             </VStack>

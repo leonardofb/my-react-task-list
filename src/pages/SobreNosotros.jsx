@@ -3,7 +3,7 @@ export const SobreNosotros = () => {
     <div>
       <h1>Sobre Nosotros</h1>
       <p>Esta aplicación fue desarrollada utilizando React y react-router-dom. 
-        ver los comentario en el codigo.
+       tambien se uso la librearia Chackra.
         </p>
       {/* Con esta aplicacion se aplico lo visto en clase Riact-Router y tambien como
       valor agregado se mejore el manejo de los css mediante style Module  a */}

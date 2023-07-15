@@ -47,19 +47,10 @@ export function useTaskState(initialTasks) {
     updateTasks(updatedTasks);
   };
 
-  const deleteAllTasks = () => {
-    updateTasks([]);
-  };
-  const deleteCompletedTasks = () => {
-    const updatedTasks = tasks.filter(task => !task.completed);
-    updateTasks(updatedTasks);
-  };
   return {
     tasks,
     addTask,
     updateTask,
-    deleteTask,
-    deleteAllTasks,
-    deleteCompletedTasks
+    deleteTask
   };
 }
