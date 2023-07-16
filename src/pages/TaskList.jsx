@@ -17,7 +17,6 @@ import {
 import { CheckIcon, DeleteIcon, RepeatIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
 import { useColorMode, useBoolean } from '@chakra-ui/react';
 import Alert from './Alert';
-
 export function TaskList() {
   const { tasks, addTask, updateTask, deleteTask, deleteAllTasks, deleteCompletedTasks } = useTaskState([]);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -28,9 +27,7 @@ export function TaskList() {
   const buttonBg = useColorModeValue('teal.500', 'teal.200');
   const buttonColor = useColorModeValue('white', 'gray.800');
   const textColor = useColorModeValue('gray.800', 'black');
-  const completedTasksCount = tasks.filter(task => task.completed).length;
-
- 
+  const completedTasksCount = tasks.filter(task => task.completed).length; 
   const bgColor = colorMode === 'dark' ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)';
 
   const createTask = (taskName, taskDescription) => {
@@ -174,7 +171,6 @@ export function TaskList() {
               <Text>
                 Completed tasks: {completedTasksCount}/{tasks.length}
               </Text>
-
               <Button
                 onClick={handleOpenDeleteCompletedAlert}
                 leftIcon={<DeleteIcon />}
@@ -187,25 +183,24 @@ export function TaskList() {
               >
                 All Comple
               </Button>
-
               <Alert
-                isOpen={showDeleteAlert}
-                onClose={handleCloseDeleteCompletedAlert}
-                onConfirm={confirmDeleteCompleted}
-                cancelText="Cancel"
-                confirmText="Delete"
-                title="Confirm Deletion"
-                message="Are you sure you want to delete all completed tasks? This action cannot be undone."
-              />
+                    isOpen={showDeleteAlert}
+                    onClose={handleCloseDeleteCompletedAlert}
+                    onConfirm={confirmDeleteCompleted}
+                    cancelText="Cancel"
+                    confirmText="Delete"
+                    title="Confirm Deletion"
+                    message="Are you sure you want to delete all completed tasks? This action cannot be undone."
+                  />
             </Box>
           </Flex>
         </form>
-
+{/*/////////////////////////MAP TASK//////////////////////////////////*/}
         <Box maxH="200px" overflowY="scroll">
           <VStack spacing={2} mt={3} align="start">
             {tasks.map((task, index) => (
               <React.Fragment key={index}>
-                <Text>Tarea: {index + 1}             
+                <Text>Date: {new Date(task.id).toLocaleString()} Task: {index + 1}                         
                 <Task task={task} updateTask={updateTask} deleteTask={deleteTask} />
                 </Text>  
                 {index !== tasks.length - 1 && <Divider />}
@@ -227,10 +222,8 @@ export function TaskList() {
         size="sm"
         leftIcon={<DeleteIcon />}
         rightIcon={<RepeatIcon />}
-      >
-        Delete All
-      </Button>
-     
+      >Delete All
+      </Button>     
       <Alert
         isOpen={showDeleteAllAlert}
         onClose={handleCloseDeleteAllAlert}
@@ -240,7 +233,6 @@ export function TaskList() {
         title="Confirm Deletion"
         message="Are you sure you want to delete all tasks? This action cannot be undone."
       />
-
       <Button
         onClick={sendTasksToServer}
         rightIcon={<CheckIcon />}

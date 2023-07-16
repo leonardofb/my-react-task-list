@@ -29,6 +29,9 @@ function Task({ task, updateTask, deleteTask }) {
   const textColor = useColorModeValue('gray.800', 'whith');
   const [showError, setShowError] = useState(false);
 
+
+
+
   const handleComplete = () => {
     const updatedTask = {
       ...task,

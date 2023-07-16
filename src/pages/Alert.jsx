@@ -1,10 +1,31 @@
 import React from 'react';
-import { AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, Button } from '@chakra-ui/react';
-function Alert({ isOpen, onClose, onConfirm, cancelText, confirmText, title, message }) {
+import {
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  Button,
+} from '@chakra-ui/react';
+
+const Alert = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  cancelText,
+  confirmText,
+  title,
+  message,
+}) => {
   const cancelRef = React.useRef();
 
   return (
-    <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+    <AlertDialog
+      isOpen={isOpen}
+      leastDestructiveRef={cancelRef}
+      onClose={onClose}
+    >
       <AlertDialogOverlay>
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
@@ -27,6 +48,8 @@ function Alert({ isOpen, onClose, onConfirm, cancelText, confirmText, title, mes
       </AlertDialogOverlay>
     </AlertDialog>
   );
-}
+};
 
 export default Alert;
+
+
