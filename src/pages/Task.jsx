@@ -11,6 +11,8 @@ import {
   useTheme,
   Box,
   useColorModeValue,
+  FormControl,
+  FormLabel,
 } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { useColorMode } from '@chakra-ui/react';
@@ -90,19 +92,21 @@ function Task({ task, updateTask, deleteTask }) {
     {isEditing ? (
       <form onSubmit={handleSubmit}>
         <Box bg={colorMode === 'dark' ? "gray.700" : "gray.200"} color={colorMode === 'dark' ? "white" : "gray.800"}>
-          <Input
+           <Input
             colorScheme={colorMode === 'dark' ? 'teal' : 'blue'}
             type="text"
             placeholder="Enter Your Task"
             name="name"
             value={editedTask.name}
             onChange={handleInputChange}
-       
             color={inputColor}
             bg={inputBgColor}
             w="400px"
-          />
+          /> 
+                 
         </Box>
+       
+      
         <Input
           colorScheme={colorMode === 'dark' ? 'teal' : 'blue'}
           placeholder="Write the description"
@@ -115,7 +119,7 @@ function Task({ task, updateTask, deleteTask }) {
           w="400px"
         />
         {error && <Text color="red.500">{error}</Text>}
-
+        
         <Flex>
           <Button type="submit" variant="solid" colorScheme="teal" size="sm" mr={2}>
             Save

@@ -3,7 +3,7 @@ import React from "react";
 import { Home } from './pages/Home';
 import { TaskList } from './pages/TaskList';
 import { SobreNosotros } from './pages/SobreNosotros';
-import { Box, VStack, Button, Flex, useColorModeValue, Container } from '@chakra-ui/react';
+import { Box, VStack, Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { useColorMode } from "@chakra-ui/react";
 
 import {ChakraProvider, ColorModeScript } from "@chakra-ui/react";
@@ -13,31 +13,25 @@ import theme from './theme';
 export const App = () => {
   const { colorMode, toggleColorMode } = useColorMode("dark");
   console.log(colorMode, toggleColorMode);
+
   const buttonBg = useColorModeValue("teal.500", "teal.200");
 
- // const bgColor = colorMode === 'dark' ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)';
-
-  const backgroundImage = colorMode === 'dark' ? '/src/images/tareas-Dark.jpg' : '/src/images/tareas.jpeg';
- 
   return (
     <ChakraProvider theme={theme}>
     <Router>
-    
       <Flex
         direction="center"
         justify="space-evenly"
         align="center"
-        w="95%"
+        w="90%"
         margin="auto"
         border="1px solid red"
         height="100vh"
-        backgroundImage={`url(${backgroundImage})`}
+        backgroundImage="url('/src/images/tareas.jpeg')"
         backgroundSize="cover"
         backgroundPosition="center"
-        
-      > 
-            
-        <Flex w="250px" p={4} pointerEvents="auto"  margin="auto">
+      >
+        <Flex w="250px" p={4} pointerEvents="auto">
           <VStack spacing={4} align="start">
             <Link to="/">
               <Button colorScheme="teal" bg={buttonBg}>Home</Button>
@@ -61,9 +55,7 @@ export const App = () => {
             <Route path="/SobreNosotros" element={<SobreNosotros />} />
           </Routes>
         </Box>
-   
       </Flex>
-    
     </Router>
     </ChakraProvider>
   );

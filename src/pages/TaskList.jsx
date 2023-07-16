@@ -4,17 +4,11 @@ import React,{ useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTaskState } from './useTaskState';
 import {
-  ChakraProvider,
-  Container,
   Text,
   VStack,
   Button,
   ButtonGroup,
-  FormControl,
-  FormLabel,
   Input,
-  FormHelperText,
-  FormErrorMessage,
   Box,
   Divider,
   Flex,
@@ -27,7 +21,6 @@ import Alert from './Alert';
 export function TaskList() {
   const { tasks, addTask, updateTask, deleteTask, deleteAllTasks, deleteCompletedTasks } = useTaskState([]);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
-  const [input, setInput] = useState('');
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showDeleteAllAlert, setShowDeleteAllAlert] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
@@ -36,6 +29,9 @@ export function TaskList() {
   const buttonColor = useColorModeValue('white', 'gray.800');
   const textColor = useColorModeValue('gray.800', 'black');
   const completedTasksCount = tasks.filter(task => task.completed).length;
+
+ 
+  const bgColor = colorMode === 'dark' ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)';
 
   const createTask = (taskName, taskDescription) => {
     return new Promise((resolve, reject) => {
@@ -101,8 +97,21 @@ export function TaskList() {
     setShowDeleteAllAlert(false);
   };
   return (
-    <VStack spacing={4} align="stretch">
-      <Box maxW="lg" py={8}>
+    <Box
+      border="2px solid"
+      borderColor="gray.500"
+      p={4}
+      py={2}
+      maxW="500px"
+      maxH="800px"
+      backgroundSize="cover"
+      backgroundPosition="center"
+      backgroundRepeat="no-repeat"
+      bg={bgColor}
+      color={colorMode === 'dark' ? 'white' : 'gray.600'}
+    >
+    
+      <Box maxW="lg" py={2}>
         <Flex justifyContent="space-between" alignItems="center">
         <Box bg={colorMode === 'dark' ? "gray.700" : "gray.200"} color={colorMode === 'dark' ? "white" : "gray.800"}>
           <Text fontSize="3xl" fontWeight="bold">
@@ -159,10 +168,8 @@ export function TaskList() {
               colorScheme="telegram"
               leftIcon={<AddIcon />}
               size="sm"
-            >
-              Add Task
+            > {/* Add Task*/}            
             </Button>
-
             <Box ml="auto">
               <Text>
                 Completed tasks: {completedTasksCount}/{tasks.length}
@@ -198,29 +205,32 @@ export function TaskList() {
           <VStack spacing={2} mt={3} align="start">
             {tasks.map((task, index) => (
               <React.Fragment key={index}>
-                <Text>Tarea: {index + 1}</Text>
+                <Text>Tarea: {index + 1}             
                 <Task task={task} updateTask={updateTask} deleteTask={deleteTask} />
+                </Text>  
                 {index !== tasks.length - 1 && <Divider />}
               </React.Fragment>
             ))}
           </VStack>
         </Box>
       </Box>
-
+      
+     
+      <ButtonGroup spacing={4}>
       <Button
         onClick={handleOpenDeleteAllAlert}
         colorScheme="teal"
         bg={buttonBg}
         color={buttonColor}
-        mt={4}
-        py={4}
+        mt={1}
+        py={1}
         size="sm"
         leftIcon={<DeleteIcon />}
         rightIcon={<RepeatIcon />}
       >
         Delete All
       </Button>
-
+     
       <Alert
         isOpen={showDeleteAllAlert}
         onClose={handleCloseDeleteAllAlert}
@@ -239,7 +249,10 @@ export function TaskList() {
         size="sm"
       >
         Send Tasks to Server
-      </Button>
-    </VStack>
+      </Button> 
+      </ButtonGroup>
+    
+    
+    </Box>
   );
 }
