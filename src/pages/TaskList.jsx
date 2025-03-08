@@ -1,4 +1,5 @@
 //TaskList.jsx
+/* eslint-disable no-unused-vars */
 import Task from './Task';
 import React,{ useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -29,7 +30,7 @@ export function TaskList() {
   const textColor = useColorModeValue('gray.800', 'black');
   const completedTasksCount = tasks.filter(task => task.completed).length; 
   const bgColor = colorMode === 'dark' ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)';
-
+/* eslint-eneable no-unused-vars */
   const createTask = (taskName, taskDescription) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

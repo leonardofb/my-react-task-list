@@ -28,7 +28,7 @@ export default [
       react: reactPlugin,
     },
     rules: {
-      "no-unused-vars": "warn",
+      "no-unused-vars": ["warn", { "varsIgnorePattern": "^(React|Router|Routes|Route|Link)$" }],
       "no-console": "warn",
       "react/jsx-uses-react": "off",
       "react/react-in-jsx-scope": "off",

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import React from "react";
 import { Home } from './pages/Home';
@@ -5,10 +6,9 @@ import { TaskList } from './pages/TaskList';
 import { SobreNosotros } from './pages/SobreNosotros';
 import { Box, VStack, Button, Flex, useColorModeValue, Container } from '@chakra-ui/react';
 import { useColorMode } from "@chakra-ui/react";
-
 import {ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from './theme';
-
+/* eslint-enable no-unused-vars */
 
 export const App = () => {
   const { colorMode, toggleColorMode } = useColorMode("dark");

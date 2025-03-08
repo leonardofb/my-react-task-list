@@ -1,5 +1,6 @@
 //Task.jsx
 import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
 import {
   Text,
   Button,
@@ -16,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { CheckIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { useColorMode } from '@chakra-ui/react';
-
+/* eslint-eneable no-unused-vars */
 function Task({ task, updateTask, deleteTask }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState({ name: task.name, description: task.description });

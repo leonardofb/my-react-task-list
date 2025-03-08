@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import React from "react";
 import { Home } from './pages/Home';
 import { TaskList } from './pages/TaskList';
 import { SobreNosotros } from './pages/SobreNosotros';
 import { ChakraProvider, Box, VStack, Text, Button } from '@chakra-ui/react';
-
+/* eslint-eneable no-unused-vars */
 //const { colorMode, toggleColorMode } = useColorMode();
 
 export const App = () => {

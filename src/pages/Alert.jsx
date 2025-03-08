@@ -1,4 +1,5 @@
 import React from 'react';
+/* eslint-disable no-unused-vars */
 import {
   AlertDialog,
   AlertDialogOverlay,
@@ -8,7 +9,7 @@ import {
   AlertDialogFooter,
   Button,
 } from '@chakra-ui/react';
-
+/* eslint-eneable no-unused-vars */
 const Alert = ({
   isOpen,
   onClose,
