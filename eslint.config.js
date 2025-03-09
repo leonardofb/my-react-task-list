@@ -1,37 +1,14 @@
 import globals from "globals";
-import reactPlugin from "eslint-plugin-react";
-import babelEslintParser from "@babel/eslint-parser";
+import pluginJs from "@eslint/js";
+import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
 
-// Opcional: Limpia las claves de globals.browser para evitar espacios en blanco
-const trimmedGlobals = Object.entries(globals.browser).reduce((acc, [key, value]) => {
-  acc[key.trim()] = value;
-  return acc;
-}, {});
 
-/** @type {import("eslint").Linter.FlatConfig[]} */
+/** @type {import('eslint').Linter.Config[]} */
 export default [
-  {
-    files: ["**/*.{js,jsx}"],
-    languageOptions: {
-      parser: babelEslintParser,
-      parserOptions: {
-        requireConfigFile: false,
-        babelOptions: {
-          presets: ["@babel/preset-react"],
-        },
-        ecmaVersion: "latest",
-        sourceType: "module",
-      },
-      globals: trimmedGlobals,
-    },
-    plugins: {
-      react: reactPlugin,
-    },
-    rules: {
-      "no-unused-vars": ["warn", { "varsIgnorePattern": "^(React|Router|Routes|Route|Link)$" }],
-      "no-console": "warn",
-      "react/jsx-uses-react": "off",
-      "react/react-in-jsx-scope": "off",
-    },
-  },
+  {files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"]},
+  {languageOptions: { globals: globals.browser }},
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
 ];
