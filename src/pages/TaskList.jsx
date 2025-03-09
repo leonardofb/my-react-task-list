@@ -199,14 +199,15 @@ export function TaskList() {
 {/*/////////////////////////MAP TASK//////////////////////////////////*/}
         <Box maxH="200px" overflowY="scroll">
           <VStack spacing={2} mt={3} align="start">
-            {tasks.map((task, index) => (
-              <React.Fragment key={index}>
-                <Text>Date: {new Date(task.id).toLocaleString()} Task: {index + 1}                         
-                <Task task={task} updateTask={updateTask} deleteTask={deleteTask} />
-                </Text>  
-                {index !== tasks.length - 1 && <Divider />}
-              </React.Fragment>
-            ))}
+          {tasks.map((task, index) => (
+  <React.Fragment key={index}>
+    <Box>
+      <Text>Date: {new Date(task.id).toLocaleString()} Task: {index + 1}</Text>
+      <Task task={task} updateTask={updateTask} deleteTask={deleteTask} />
+    </Box>
+    {index !== tasks.length - 1 && <Divider />}
+  </React.Fragment>
+))}
           </VStack>
         </Box>
       </Box>
