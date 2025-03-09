@@ -9,7 +9,7 @@ export const Home = () => {
   return (
     <Box textAlign="center" p={8}>
       <Text fontSize="5xl" fontWeight="bold" color={titleColor}>
-        ¡Hola, Bienvenido a La Lista de Tareas de Poliservicos!
+        ¡Hola, Bienvenido a La Lista de Tareas de Poliservicios!
       </Text>
       <Text fontSize="xl" mt={4} color={textColor}>
         Organiza tus tareas, planifica tus proyectos y vive una experiencia
